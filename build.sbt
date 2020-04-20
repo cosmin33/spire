@@ -1,18 +1,22 @@
+import sbtcrossproject.CrossPlugin.autoImport.crossProject
+import sbtcrossproject.CrossType
 import microsites._
 import ReleaseTransformations._
 
-import sbtcrossproject.{CrossType, crossProject}
+inThisBuild(Seq(
+  scalaVersion := "2.13.1",
+))
 
 lazy val scalaVersions: Map[String, String] =
   Map("2.11" -> "2.11.12", "2.12" -> "2.12.8", "2.13" -> "2.13.1")
 
 lazy val scalaCheckVersion = "1.14.3"
 lazy val scalaTestVersion = "3.2.0-M4"
-lazy val scalaTestPlusVersion = "3.1.0.0-RC2"
+lazy val scalaTestPlusVersion = "3.3.0.0-SNAP2"
 lazy val shapelessVersion = "2.3.3"
 lazy val disciplineScalaTestVersion = "1.0.1"
-lazy val machinistVersion = "0.6.8"
-lazy val algebraVersion = "2.0.0"
+lazy val machinistVersion = "0.6.9-SNAPSHOT"
+lazy val algebraVersion = "2.0.1"
 
 lazy val apfloatVersion = "1.9.1"
 lazy val jscienceVersion = "4.3.1"
@@ -274,7 +278,7 @@ addCommandAlias("validate", ";validateJVM;validateJS")
 
 lazy val buildSettings = Seq(
   organization := "org.typelevel",
-  scalaVersion := scalaVersions("2.12"),
+  scalaVersion := scalaVersions("2.13"),
   crossScalaVersions := Seq(scalaVersions("2.11"), scalaVersions("2.12"), scalaVersions("2.13")),
   unmanagedSourceDirectories in Compile += {
       val sharedSourceDir = (baseDirectory in ThisBuild).value / "compat/src/main"
@@ -446,7 +450,7 @@ lazy val scalaCheckSettings  = Seq(libraryDependencies += "org.scalacheck" %%% "
 
 lazy val scalaTestSettings = Seq(
   libraryDependencies += "org.scalatest" %%% "scalatest" % scalaTestVersion % Test,
-  libraryDependencies += "org.scalatestplus" %%% "scalatestplus-scalacheck" % scalaTestPlusVersion % Test,
+  libraryDependencies += "org.scalatestplus" %%% "scalacheck-1-14" % scalaTestPlusVersion % Test,
   libraryDependencies += "com.chuusai" %% "shapeless" % shapelessVersion % Test
 )
 
